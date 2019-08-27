@@ -1,9 +1,9 @@
 package com.jianzhong.demo.service;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-@Service
-public class RedisService
-{
+@Repository("RedisRepository")
+public class RedisService {
+
 
 }
