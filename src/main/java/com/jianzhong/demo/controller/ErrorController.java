@@ -1,0 +1,62 @@
+package com.jianzhong.demo.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+public class ErrorController {
+
+    @RequestMapping("/500")
+    @ResponseBody
+    @SuppressWarnings("unchecked")
+    public Map ServerError(String message)
+    {
+        Map result = new HashMap();
+        result.put("code",500);
+        result.put("msg","服务器繁忙，请稍后再试!"+message);
+        result.put("data",null);
+        return result;
+    }
+
+    @RequestMapping("/401")
+    @ResponseBody
+    @SuppressWarnings("unchecked")
+    public Map NoAuth()
+    {
+        Map result = new HashMap();
+        result.put("code",401);
+        result.put("msg","未经授权");
+        result.put("data",null);
+        return result;
+    }
+
+    @RequestMapping("/403")
+    @ResponseBody
+    @SuppressWarnings("unchecked")
+    public Map NoPermission()
+    {
+        Map result = new HashMap();
+        result.put("code",403);
+        result.put("msg","你没有权限访问该页面");
+        result.put("data",null);
+        return result;
+    }
+
+    @RequestMapping("/404")
+    @ResponseBody
+    @SuppressWarnings("unchecked")
+    public Map NotFound()
+    {
+        Map result = new HashMap();
+        result.put("code",404);
+        result.put("msg","页面未找到");
+        result.put("data",null);
+        return result;
+    }
+
+
+}
