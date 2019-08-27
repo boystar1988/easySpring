@@ -15,13 +15,13 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from pha_user
+    from sp_user
     where uid = #{uid,jdbcType=INTEGER}
   </select>
   <select id="select" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from pha_user
+    from sp_user
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from pha_user

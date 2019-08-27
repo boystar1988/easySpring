@@ -15,7 +15,7 @@
         </commentGenerator>
 
         <!-- 数据库的相关配置 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/test" userId="root" password="123456"/>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/spring" userId="root" password="root"/>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -37,7 +37,7 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-        <table tableName="pha_user" domainObjectName="User" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+        <table tableName="sp_user" domainObjectName="User" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
             <property name="useActualColumnNames" value="true" />
             <columnOverride column="is_del" javaType="java.lang.Integer"/>
             <generatedKey column="uid" sqlStatement="MySql" identity="true"/>

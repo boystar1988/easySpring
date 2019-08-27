@@ -6,6 +6,7 @@ import com.jianzhong.demo.domain.User;
 import com.jianzhong.demo.service.UserService;
 import com.jianzhong.demo.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,7 +26,6 @@ public class UserController extends CommonController{
     @ResponseBody
     public Map list(@RequestParam(value = "pageNum",defaultValue = "1") String pageNum,@RequestParam(value = "pageSize",defaultValue = "20") String pageSize)
     {
-        redisUtil.set("springboot","1",0);
         List<User> data = userService.select();
         PageHelper.startPage(Integer.parseInt(pageNum),Integer.parseInt(pageSize));
         PageInfo<User> pageInfo = new PageInfo<>(data);
@@ -74,6 +74,7 @@ public class UserController extends CommonController{
         }
     }
 
+    @Transactional
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
     @SuppressWarnings("unchecked")
