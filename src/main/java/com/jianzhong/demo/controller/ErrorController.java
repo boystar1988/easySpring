@@ -1,6 +1,9 @@
 package com.jianzhong.demo.controller;
 
+import com.jianzhong.demo.constant.ResultConstant;
+import com.jianzhong.demo.vo.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,50 +14,49 @@ import java.util.Map;
 @RestController
 @Slf4j
 @SuppressWarnings("unchecked")
-public class ErrorController {
+public class ErrorController
+{
+    @Autowired
+    private Result result;
 
     @RequestMapping("/500")
     @ResponseBody
-    public Map ServerError(String message)
+    public Result ServerError(String message)
     {
-        Map result = new HashMap();
-        result.put("code",500);
-        result.put("msg","服务器繁忙，请稍后再试!");
-        result.put("data",null);
         log.error(message);
+        result.setCode(ResultConstant.CODE_ERROR);
+        result.setMsg("服务器繁忙，请稍后再试!");
+        result.setData(null);
         return result;
     }
 
     @RequestMapping("/401")
     @ResponseBody
-    public Map NoAuth()
+    public Result NoAuth()
     {
-        Map result = new HashMap();
-        result.put("code",401);
-        result.put("msg","未经授权");
-        result.put("data",null);
+        result.setCode(ResultConstant.CODE_NOAUTH);
+        result.setMsg("未经授权");
+        result.setData(null);
         return result;
     }
 
     @RequestMapping("/403")
     @ResponseBody
-    public Map NoPermission()
+    public Result NoPermission()
     {
-        Map result = new HashMap();
-        result.put("code",403);
-        result.put("msg","你没有权限访问该页面");
-        result.put("data",null);
+        result.setCode(ResultConstant.CODE_NOPERMISSION);
+        result.setMsg("你没有权限访问该页面");
+        result.setData(null);
         return result;
     }
 
     @RequestMapping("/404")
     @ResponseBody
-    public Map NotFound()
+    public Result NotFound()
     {
-        Map result = new HashMap();
-        result.put("code",404);
-        result.put("msg","页面未找到");
-        result.put("data",null);
+        result.setCode(ResultConstant.CODE_NOTFOUND);
+        result.setMsg("页面未找到");
+        result.setData(null);
         return result;
     }
 

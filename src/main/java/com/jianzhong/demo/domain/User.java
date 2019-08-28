@@ -4,7 +4,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class User implements Serializable
+{
     @ApiModelProperty(value = "用户ID")
     private Integer uid;
 

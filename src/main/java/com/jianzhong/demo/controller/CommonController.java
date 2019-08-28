@@ -1,11 +1,9 @@
 package com.jianzhong.demo.controller;
 
+import com.jianzhong.demo.constant.ResultConstant;
 import com.jianzhong.demo.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @SuppressWarnings("unchecked")
@@ -24,7 +22,7 @@ public class CommonController
 
     public Result success(Object data, String message)
     {
-        result.setCode(200);
+        result.setCode(ResultConstant.CODE_SUCCESS);
         result.setMsg(message);
         result.setData(data);
         return result;

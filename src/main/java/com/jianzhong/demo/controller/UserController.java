@@ -10,7 +10,6 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +100,7 @@ public class UserController extends CommonController
 
     @ApiOperation(value = "更新用户" ,  notes="新增，修改用户")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "uid",value = "用户ID",defaultValue = "0",dataType = "int",required = false),
+        @ApiImplicitParam(name = "uid",value = "用户ID",defaultValue = "0",dataType = "int"),
         @ApiImplicitParam(name = "username",value = "用户名",defaultValue = "20",dataType = "int",required = true)
     })
     @ApiResponses({
