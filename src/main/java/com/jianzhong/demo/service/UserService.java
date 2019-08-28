@@ -1,14 +1,12 @@
 package com.jianzhong.demo.service;
 
 import com.jianzhong.demo.domain.User;
-import com.jianzhong.demo.event.UserEvent;
 import com.jianzhong.demo.event.UserRegisterEvent;
 import com.jianzhong.demo.repository.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;

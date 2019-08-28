@@ -1,15 +1,12 @@
 package com.jianzhong.demo.controller;
 
 import com.jianzhong.demo.constant.ResultConstant;
-import com.jianzhong.demo.vo.Result;
+import com.jianzhong.demo.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @Slf4j
@@ -17,11 +14,11 @@ import java.util.Map;
 public class ErrorController
 {
     @Autowired
-    private Result result;
+    private ResultVo result;
 
     @RequestMapping("/500")
     @ResponseBody
-    public Result ServerError(String message)
+    public ResultVo ServerError(String message)
     {
         log.error(message);
         result.setCode(ResultConstant.CODE_ERROR);
@@ -32,7 +29,7 @@ public class ErrorController
 
     @RequestMapping("/401")
     @ResponseBody
-    public Result NoAuth()
+    public ResultVo NoAuth()
     {
         result.setCode(ResultConstant.CODE_NOAUTH);
         result.setMsg("未经授权");
@@ -42,7 +39,7 @@ public class ErrorController
 
     @RequestMapping("/403")
     @ResponseBody
-    public Result NoPermission()
+    public ResultVo NoPermission()
     {
         result.setCode(ResultConstant.CODE_NOPERMISSION);
         result.setMsg("你没有权限访问该页面");
@@ -52,7 +49,7 @@ public class ErrorController
 
     @RequestMapping("/404")
     @ResponseBody
-    public Result NotFound()
+    public ResultVo NotFound()
     {
         result.setCode(ResultConstant.CODE_NOTFOUND);
         result.setMsg("页面未找到");

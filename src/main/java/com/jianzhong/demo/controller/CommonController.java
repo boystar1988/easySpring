@@ -1,7 +1,7 @@
 package com.jianzhong.demo.controller;
 
 import com.jianzhong.demo.constant.ResultConstant;
-import com.jianzhong.demo.vo.Result;
+import com.jianzhong.demo.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommonController
 {
     @Autowired
-    Result result;
+    ResultVo result;
 
-    public Result asJson(Integer code,String message,Object data)
+    public ResultVo asJson(Integer code, String message, Object data)
     {
         result.setCode(code);
         result.setMsg(message);
@@ -20,7 +20,7 @@ public class CommonController
         return result;
     }
 
-    public Result success(Object data, String message)
+    public ResultVo success(Object data, String message)
     {
         result.setCode(ResultConstant.CODE_SUCCESS);
         result.setMsg(message);
@@ -28,7 +28,7 @@ public class CommonController
         return result;
     }
 
-    public Result error(String message,Integer code)
+    public ResultVo error(String message, Integer code)
     {
         result.setCode(code);
         result.setMsg(message);

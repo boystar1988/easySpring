@@ -4,7 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Result<T>
+public class ResultVo<T>
 {
     @ApiModelProperty(value = "错误码")
     private int code;
@@ -15,16 +15,16 @@ public class Result<T>
     @ApiModelProperty(value = "数据")
     private T data;
 
-    public Result()
+    public ResultVo()
     {
     }
 
-    public Result(int code,String msg)
+    public ResultVo(int code, String msg)
     {
         this(code,msg,null);
     }
 
-    public Result(int code,String msg,T data)
+    public ResultVo(int code, String msg, T data)
     {
         this.code = code;
         this.msg = msg;

@@ -9,17 +9,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class UserJob
+public class UserRegJob
 {
-
     @Autowired
     MailService mailService;
 
-    @RabbitListener(queues = QueueConstant.DIRECT_QUEUE_USER)
+    @RabbitListener(queues = QueueConstant.DIRECT_QUEUE_USER_REGISTER)
     public void process(Object data)
     {
         log.info("用户队列添加成功：" + data);
-        mailService.send("814411929@qq.com","建众帮","感谢你注册建众帮");
+        mailService.sendHtml("814411929@qq.com","easySpring","感谢你注册,<a href=\"https://github.com/boystar1988\">官方网站</a>");
     }
 
 }

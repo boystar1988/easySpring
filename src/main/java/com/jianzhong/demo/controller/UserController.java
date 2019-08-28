@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jianzhong.demo.domain.User;
 import com.jianzhong.demo.service.UserService;
-import com.jianzhong.demo.vo.Result;
+import com.jianzhong.demo.vo.ResultVo;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +35,7 @@ public class UserController extends CommonController
     })
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     @ResponseBody
-    public Result<List<User>> list(
+    public ResultVo<List<User>> list(
         @RequestParam(value = "pageNum",defaultValue = "1") String pageNum,
         @RequestParam(value = "pageSize",defaultValue = "20") String pageSize
     ) {
@@ -55,7 +55,7 @@ public class UserController extends CommonController
     })
     @RequestMapping(value = "/detail",method = RequestMethod.GET)
     @ResponseBody
-    public Result<User> detail(@RequestParam(value = "uid",defaultValue = "0") String uid )
+    public ResultVo<User> detail(@RequestParam(value = "uid",defaultValue = "0") String uid )
     {
         int intUid = Integer.parseInt(uid);
         if(intUid == 0){
@@ -80,7 +80,7 @@ public class UserController extends CommonController
     })
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
-    public Result delete(@RequestParam(value = "uid",defaultValue = "0") String uid )
+    public ResultVo delete(@RequestParam(value = "uid",defaultValue = "0") String uid )
     {
         int intUid = Integer.parseInt(uid);
         if(intUid == 0){
@@ -109,7 +109,7 @@ public class UserController extends CommonController
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
     @Transactional
-    public Result update(@RequestParam(value = "uid",defaultValue = "0") String uid,@RequestParam(value = "username",defaultValue = "") String username )
+    public ResultVo update(@RequestParam(value = "uid",defaultValue = "0") String uid, @RequestParam(value = "username",defaultValue = "") String username )
     {
         int intUid = Integer.parseInt(uid);
         if(intUid == 0){
