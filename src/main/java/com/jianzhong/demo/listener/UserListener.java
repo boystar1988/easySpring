@@ -20,12 +20,12 @@ public class UserListener
     @EventListener
     public void userEvent(UserEvent event)
     {
-        queueService.push(QueueConstant.DIRECT_QUEUE_USER, event.getData());
+//        queueService.push(QueueConstant.DIRECT_QUEUE_USER, event.getData());
     }
 
     @EventListener
     public void userRegisterEvent(UserRegisterEvent event)
     {
-        queueService.push(QueueConstant.DIRECT_QUEUE_ORDER,event.getData());
+//        queueService.push(QueueConstant.DIRECT_QUEUE_ORDER,event.getData());
     }
 }

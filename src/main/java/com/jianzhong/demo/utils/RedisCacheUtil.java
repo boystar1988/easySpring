@@ -1,24 +1,19 @@
 package com.jianzhong.demo.utils;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.cache.Cache;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-
-public class RedisCacheUtil implements Cache //实现类
+@Slf4j
+public class RedisCacheUtil implements Cache
 {
-    private static final Logger logger = LoggerFactory.getLogger(RedisCacheUtil.class);
-
-    private RedisUtil redisUtil;
 
     private static RedisTemplate<String,Object> redisTemplate;
 
@@ -35,63 +30,70 @@ public class RedisCacheUtil implements Cache //实现类
         return this.readWriteLock;
     }
 
-    public static void setRedisTemplate(RedisTemplate redisTemplate) {
-
+    public static void setRedisTemplate(RedisTemplate redisTemplate)
+    {
         RedisCacheUtil.redisTemplate = redisTemplate;
     }
 
-    public RedisCacheUtil(final String id) {
+    public RedisCacheUtil(final String id)
+    {
         if (id == null) {
             throw new IllegalArgumentException("Cache instances require an ID");
         }
-        logger.debug("MybatisRedisCache:id=" + id);
+        log.debug("MybatisRedisCache:id=" + id);
         this.id = id;
     }
 
     @Override
-    public String getId() {
+    public String getId()
+    {
         return this.id;
     }
 
     @Override
-    public void putObject(Object key, Object value) {
+    public void putObject(Object key, Object value)
+    {
         try{
-            logger.info(">>>>>>>>>>>>>>>>>>>>>>>>putObject: key="+key+",value="+value);
             if(null!=value)
                 redisTemplate.opsForValue().set(key.toString(),value,2, TimeUnit.DAYS);
+            log.info("保存"+key.toString());
         }catch (Exception e){
             e.printStackTrace();
-            logger.error("redis保存数据异常！");
+            log.error("redis保存数据异常！");
         }
     }
 
     @Override
-    public Object getObject(Object key) {
+    public Object getObject(Object key)
+    {
         try{
-            logger.info(">>>>>>>>>>>>>>>>>>>>>>>>getObject: key="+key);
-            if(null!=key)
+            if(null!=key){
+                log.info("获取"+key.toString());
                 return redisTemplate.opsForValue().get(key.toString());
+            }
         }catch (Exception e){
             e.printStackTrace();
-            logger.error("redis获取数据异常！");
+            log.error("redis获取数据异常！");
         }
         return null;
     }
 
     @Override
-    public Object removeObject(Object key) {
+    public Object removeObject(Object key)
+    {
         try{
             if(null!=key)
                 return redisTemplate.expire(key.toString(),1,TimeUnit.DAYS);
         }catch (Exception e){
             e.printStackTrace();
-            logger.error("redis获取数据异常！");
+            log.error("redis获取数据异常！");
         }
         return null;
     }
 
     @Override
-    public void clear() {
+    public void clear()
+    {
         Long size=redisTemplate.execute(new RedisCallback<Long>() {
             @Override
             public Long doInRedis(RedisConnection redisConnection) throws DataAccessException {
@@ -102,11 +104,12 @@ public class RedisCacheUtil implements Cache //实现类
                 return size;
             }
         });
-        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>clear: 清除了" + size + "个对象");
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>>clear: 清除了" + size + "个对象");
     }
 
     @Override
-    public int getSize() {
+    public int getSize()
+    {
         Long size = redisTemplate.execute(new RedisCallback<Long>() {
             @Override
             public Long doInRedis(RedisConnection connection)
