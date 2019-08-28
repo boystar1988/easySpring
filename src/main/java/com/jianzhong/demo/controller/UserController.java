@@ -19,21 +19,23 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 @SuppressWarnings("unchecked")
-public class UserController extends CommonController{
-
+public class UserController extends CommonController
+{
     @Autowired
     UserService userService;
     @Autowired
     RedisUtil redisUtil;
 
-
     @ApiOperation(value = "用户列表" ,  notes="获取用户列表")
     @ApiImplicitParams({
-       @ApiImplicitParam(name = "pageNum",value = "页码",defaultValue = "1",dataType = "int",required = false,paramType = "query"),
-       @ApiImplicitParam(name = "pageSize",value = "页寸",defaultValue = "20",dataType = "int",required = false,paramType = "query")
+       @ApiImplicitParam(name = "pageNum", value = "页码",defaultValue = "1", dataType = "int",paramType = "query"),
+       @ApiImplicitParam(name = "pageSize",value = "页寸",defaultValue = "20",dataType = "int",paramType = "query")
     })
     @ApiResponses({
-        @ApiResponse(code = 200,message = "success")
+        @ApiResponse(code = 200,message = "操作成功"),
+        @ApiResponse(code = 401,message = "未经授权"),
+        @ApiResponse(code = 403,message = "你没有权限访问该页面"),
+        @ApiResponse(code = 404,message = "页面未找到")
     })
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     @ResponseBody
@@ -50,6 +52,12 @@ public class UserController extends CommonController{
 
     @ApiOperation(value = "用户详情" ,  notes="获取用户详情")
     @ApiImplicitParam(name = "uid",value = "用户ID",required = true,paramType = "query")
+    @ApiResponses({
+        @ApiResponse(code = 200,message = "操作成功"),
+        @ApiResponse(code = 401,message = "未经授权"),
+        @ApiResponse(code = 403,message = "你没有权限访问该页面"),
+        @ApiResponse(code = 404,message = "页面未找到")
+    })
     @RequestMapping(value = "/detail",method = RequestMethod.GET)
     @ResponseBody
     public Result<User> detail(@RequestParam(value = "uid",defaultValue = "0") String uid )
@@ -68,6 +76,13 @@ public class UserController extends CommonController{
 
     @ApiOperation(value = "删除用户" ,  notes="删除用户")
     @ApiImplicitParam(name = "uid",value = "用户ID",required = true)
+    @ApiResponses({
+        @ApiResponse(code = 200,message = "操作成功"),
+        @ApiResponse(code = 201,message = "创建成功"),
+        @ApiResponse(code = 401,message = "未经授权"),
+        @ApiResponse(code = 403,message = "你没有权限访问该页面"),
+        @ApiResponse(code = 404,message = "页面未找到")
+    })
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
     public Result delete(@RequestParam(value = "uid",defaultValue = "0") String uid )
@@ -89,9 +104,16 @@ public class UserController extends CommonController{
         @ApiImplicitParam(name = "uid",value = "用户ID",defaultValue = "0",dataType = "int",required = false),
         @ApiImplicitParam(name = "username",value = "用户名",defaultValue = "20",dataType = "int",required = true)
     })
-    @Transactional
+    @ApiResponses({
+        @ApiResponse(code = 200,message = "操作成功"),
+        @ApiResponse(code = 201,message = "创建成功"),
+        @ApiResponse(code = 401,message = "未经授权"),
+        @ApiResponse(code = 403,message = "你没有权限访问该页面"),
+        @ApiResponse(code = 404,message = "页面未找到")
+    })
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
+    @Transactional
     public Result update(@RequestParam(value = "uid",defaultValue = "0") String uid,@RequestParam(value = "username",defaultValue = "") String username )
     {
         int intUid = Integer.parseInt(uid);
