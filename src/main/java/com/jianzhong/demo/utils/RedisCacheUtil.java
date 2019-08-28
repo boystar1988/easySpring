@@ -56,7 +56,7 @@ public class RedisCacheUtil implements Cache
         try{
             if(null!=value)
                 redisTemplate.opsForValue().set(key.toString(),value,2, TimeUnit.DAYS);
-            log.info("保存"+key.toString());
+//            log.info("保存"+key.toString());
         }catch (Exception e){
             e.printStackTrace();
             log.error("redis保存数据异常！");
@@ -68,7 +68,7 @@ public class RedisCacheUtil implements Cache
     {
         try{
             if(null!=key){
-                log.info("获取"+key.toString());
+//                log.info("获取"+key.toString());
                 return redisTemplate.opsForValue().get(key.toString());
             }
         }catch (Exception e){

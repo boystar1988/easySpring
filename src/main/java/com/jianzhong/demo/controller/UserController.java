@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jianzhong.demo.domain.User;
 import com.jianzhong.demo.service.UserService;
-import com.jianzhong.demo.utils.RedisUtil;
 import com.jianzhong.demo.vo.Result;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,6 @@ public class UserController extends CommonController
 {
     @Autowired
     UserService userService;
-    @Autowired
-    RedisUtil redisUtil;
 
     @ApiOperation(value = "用户列表" ,  notes="获取用户列表")
     @ApiImplicitParams({
@@ -45,7 +42,6 @@ public class UserController extends CommonController
         List<User> data = userService.select();
         PageHelper.startPage(Integer.parseInt(pageNum),Integer.parseInt(pageSize));
         PageInfo<User> pageInfo = new PageInfo<>(data);
-        redisUtil.set("spring:userIndex:"+pageNum,pageInfo.toString(),0);
         return this.success(pageInfo,"success");
     }
 

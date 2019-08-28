@@ -37,26 +37,21 @@ public class UserService implements Serializable
 
     public int insertSelective(User record)
     {
-        return userMapper.insertSelective(record);
+        int uid = userMapper.insertSelective(record);
+        Map data = new HashMap();
+        data.put("uid",record);
+        UserRegisterEvent event = new UserRegisterEvent(this, data);
+        publisher.publishEvent(event);
+        return uid;
     }
 
     public User selectByPrimaryKey(Integer uid)
     {
-        Map data = new HashMap();
-        data.put("uid",uid);
-        UserEvent event = new UserEvent(this, data);
-        publisher.publishEvent(event);
-        log.info("详情事件发布成功");
         return userMapper.selectByPrimaryKey(uid);
     }
 
     public List<User> select()
     {
-        Map data = new HashMap();
-        data.put("user","abc");
-        UserRegisterEvent event = new UserRegisterEvent(this, data);
-        publisher.publishEvent(event);
-        log.info("列表事件发布成功");
         return userMapper.select();
     }
 

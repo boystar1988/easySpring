@@ -1,7 +1,6 @@
 package com.jianzhong.demo.listener;
 
 import com.jianzhong.demo.constant.QueueConstant;
-import com.jianzhong.demo.event.UserEvent;
 import com.jianzhong.demo.event.UserRegisterEvent;
 import com.jianzhong.demo.service.QueueService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +17,8 @@ public class UserListener
     QueueService queueService;
 
     @EventListener
-    public void userEvent(UserEvent event)
-    {
-//        queueService.push(QueueConstant.DIRECT_QUEUE_USER, event.getData());
-    }
-
-    @EventListener
     public void userRegisterEvent(UserRegisterEvent event)
     {
-//        queueService.push(QueueConstant.DIRECT_QUEUE_ORDER,event.getData());
+        queueService.push(QueueConstant.DIRECT_QUEUE_USER_REGISTER,event.getData());
     }
 }
