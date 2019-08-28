@@ -15,6 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
+@SuppressWarnings("unchecked")
 public class UserController extends CommonController{
 
     @Autowired
@@ -29,55 +30,45 @@ public class UserController extends CommonController{
         List<User> data = userService.select();
         PageHelper.startPage(Integer.parseInt(pageNum),Integer.parseInt(pageSize));
         PageInfo<User> pageInfo = new PageInfo<>(data);
+        redisUtil.set("spring:userIndex:"+pageNum,pageInfo.toString(),0);
         return this.success(pageInfo,"success");
     }
 
     @RequestMapping(value = "/detail",method = RequestMethod.GET)
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public Map detail(@RequestParam(value = "uid",defaultValue = "0") String uid )
     {
         int intUid = Integer.parseInt(uid);
         if(intUid == 0){
             return this.error("缺少uid参数",404);
         }
-        Map result = new HashMap();
         User data = userService.selectByPrimaryKey(intUid);
         if(data == null){
             return this.error("未找到该用户",404);
         }else{
-            result.put("code",200);
-            result.put("msg","success");
-            result.put("data",data);
-            return result;
+            return this.success(data,"success");
         }
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public Map delete(@RequestParam(value = "uid",defaultValue = "0") String uid )
     {
         int intUid = Integer.parseInt(uid);
         if(intUid == 0){
             return this.error("缺少uid参数",404);
         }
-        Map result = new HashMap();
         int data = userService.deleteByPrimaryKey(intUid);
         if(data == 0){
             return this.error("未找到该用户",404);
         }else{
-            result.put("code",200);
-            result.put("msg","success");
-            result.put("data",data);
-            return result;
+            return this.success(data,"success");
         }
     }
 
     @Transactional
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public Map update(@RequestParam(value = "uid",defaultValue = "0") String uid,@RequestParam(value = "username",defaultValue = "") String username )
     {
         int intUid = Integer.parseInt(uid);

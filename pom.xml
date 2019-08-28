@@ -73,6 +73,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <!-- 邮件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
         <!-- 配置中心 -->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->

@@ -10,38 +10,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-public class IndexController {
+public class IndexController extends CommonController{
 
     @Autowired
     RedisUtil redisUtil;
 
     @RequestMapping("/")
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public Map Index()
     {
-        Map result = new HashMap();
         Map data = new HashMap();
-        result.put("code",200);
-        result.put("msg","Spring Boot");
-        result.put("data",data);
-        return result;
+        return this.success(data,"Hello Spring Boot ~");
     }
 
     @RequestMapping("/redis")
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public Map redis()
     {
-        Map result = new HashMap();
         int timeInt = (int)System.currentTimeMillis();
         String time = Integer.toString(timeInt);
         redisUtil.set("SpringBoot",time,0);
         String data = redisUtil.get("SpringBoot",0);
-        result.put("code",200);
-        result.put("msg","Spring Boot");
-        result.put("data",data);
-        return result;
+        return this.success(data,"success");
     }
 
 }

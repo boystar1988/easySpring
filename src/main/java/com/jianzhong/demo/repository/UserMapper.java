@@ -4,7 +4,6 @@ import com.jianzhong.demo.domain.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface UserMapper {

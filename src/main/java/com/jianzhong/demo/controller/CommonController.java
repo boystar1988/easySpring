@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@SuppressWarnings("unchecked")
 public class CommonController
 {
     public Map asJson(Integer code,String message,Object data)

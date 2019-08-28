@@ -12,8 +12,7 @@ class ErrorHandleController implements ErrorController {
 
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request){
-        //获取statusCode:401,404,500
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+        int statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         Exception error = (Exception)request.getAttribute("javax.servlet.error.exception");
         String message = error.getMessage();
         System.out.print(message);
@@ -28,8 +27,10 @@ class ErrorHandleController implements ErrorController {
         }
 
     }
+
     @Override
-    public String getErrorPath() {
+    public String getErrorPath()
+    {
         return "/error";
     }
 }

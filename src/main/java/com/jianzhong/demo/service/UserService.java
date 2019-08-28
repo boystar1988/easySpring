@@ -2,6 +2,7 @@ package com.jianzhong.demo.service;
 
 import com.jianzhong.demo.domain.User;
 import com.jianzhong.demo.event.UserEvent;
+import com.jianzhong.demo.event.UserRegisterEvent;
 import com.jianzhong.demo.repository.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @Service
 @Slf4j
+@SuppressWarnings("unchecked")
 public class UserService
 {
 
@@ -43,12 +45,17 @@ public class UserService
         data.put("uid",uid);
         UserEvent event = new UserEvent(this, data);
         publisher.publishEvent(event);
-        log.info("事件发布成功");
+        log.info("详情事件发布成功");
         return userMapper.selectByPrimaryKey(uid);
     }
 
     public List<User> select()
     {
+        Map data = new HashMap();
+        data.put("user","abc");
+        UserRegisterEvent event = new UserRegisterEvent(this, data);
+        publisher.publishEvent(event);
+        log.info("列表事件发布成功");
         return userMapper.select();
     }
 

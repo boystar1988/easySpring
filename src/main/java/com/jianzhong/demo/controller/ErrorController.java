@@ -10,11 +10,11 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@SuppressWarnings("unchecked")
 public class ErrorController {
 
     @RequestMapping("/500")
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public Map ServerError(String message)
     {
         Map result = new HashMap();
@@ -27,7 +27,6 @@ public class ErrorController {
 
     @RequestMapping("/401")
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public Map NoAuth()
     {
         Map result = new HashMap();
@@ -39,7 +38,6 @@ public class ErrorController {
 
     @RequestMapping("/403")
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public Map NoPermission()
     {
         Map result = new HashMap();
@@ -51,7 +49,6 @@ public class ErrorController {
 
     @RequestMapping("/404")
     @ResponseBody
-    @SuppressWarnings("unchecked")
     public Map NotFound()
     {
         Map result = new HashMap();

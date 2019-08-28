@@ -6,14 +6,14 @@ import org.springframework.context.ApplicationEvent;
 
 @Data
 @Slf4j
-public class UserEvent extends ApplicationEvent {
+public class UserRegisterEvent extends ApplicationEvent {
 
     /**
      * 事件数据
      */
     private Object data;
 
-    public UserEvent(Object source, Object data)
+    public UserRegisterEvent(Object source, Object data)
     {
         super(source);
         this.data = data;
