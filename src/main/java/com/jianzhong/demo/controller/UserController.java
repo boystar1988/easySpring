@@ -29,8 +29,8 @@ public class UserController extends CommonController{
 
     @ApiOperation(value = "用户列表" ,  notes="获取用户列表")
     @ApiImplicitParams({
-       @ApiImplicitParam(name = "pageNum",value = "页码",defaultValue = "1",dataType = "int",required = false),
-       @ApiImplicitParam(name = "pageSize",value = "页寸",defaultValue = "20",dataType = "int",required = false)
+       @ApiImplicitParam(name = "pageNum",value = "页码",defaultValue = "1",dataType = "int",required = false,paramType = "query"),
+       @ApiImplicitParam(name = "pageSize",value = "页寸",defaultValue = "20",dataType = "int",required = false,paramType = "query")
     })
     @ApiResponses({
         @ApiResponse(code = 200,message = "success")
@@ -49,7 +49,7 @@ public class UserController extends CommonController{
     }
 
     @ApiOperation(value = "用户详情" ,  notes="获取用户详情")
-    @ApiImplicitParam(name = "uid",value = "用户ID",required = true)
+    @ApiImplicitParam(name = "uid",value = "用户ID",required = true,paramType = "query")
     @RequestMapping(value = "/detail",method = RequestMethod.GET)
     @ResponseBody
     public Result<User> detail(@RequestParam(value = "uid",defaultValue = "0") String uid )

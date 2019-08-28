@@ -32,7 +32,7 @@ public class SwaggerConfig {
                 .title("easySpring API接口文档")
                 .description("由Swagger插件动态生成")
                 .termsOfServiceUrl("")
-                .contact(new Contact("", "", ""))
+                .contact(new Contact("zhaozhuobin", "https://github.com/boystar1988", "814411929@qq.com"))
                 .license("")
                 .licenseUrl("")
                 .version(" 1.0 ")
