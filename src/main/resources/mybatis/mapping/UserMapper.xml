@@ -25,11 +25,11 @@
     from sp_user
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from pha_user
+    delete from sp_user
     where uid = #{uid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jianzhong.demo.domain.User">
-    insert into pha_user (uid, username, password, 
+    insert into sp_user (uid, username, password, 
       is_del, create_time, update_time
       )
     values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
@@ -37,7 +37,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jianzhong.demo.domain.User">
-    insert into pha_user
+    insert into sp_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="uid != null">
         uid,
@@ -80,7 +80,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.jianzhong.demo.domain.User">
-    update pha_user
+    update sp_user
     <set>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
@@ -101,7 +101,7 @@
     where uid = #{uid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jianzhong.demo.domain.User">
-    update pha_user
+    update sp_user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       is_del = #{is_del,jdbcType=BIT},

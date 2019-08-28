@@ -1,6 +1,7 @@
 package com.jianzhong.demo.controller;
 
 import com.jianzhong.demo.utils.RedisUtil;
+import com.jianzhong.demo.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,7 +18,7 @@ public class IndexController extends CommonController{
 
     @RequestMapping("/")
     @ResponseBody
-    public Map Index()
+    public Result Index()
     {
         Map data = new HashMap();
         return this.success(data,"Hello Spring Boot ~");
@@ -25,7 +26,7 @@ public class IndexController extends CommonController{
 
     @RequestMapping("/redis")
     @ResponseBody
-    public Map redis()
+    public Result redis()
     {
         int timeInt = (int)System.currentTimeMillis();
         String time = Integer.toString(timeInt);

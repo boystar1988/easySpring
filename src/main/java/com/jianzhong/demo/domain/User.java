@@ -1,18 +1,26 @@
 package com.jianzhong.demo.domain;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
+    @ApiModelProperty(value = "用户ID")
     private Integer uid;
 
+    @ApiModelProperty(value = "用户名")
     private String username;
 
+    @ApiModelProperty(value = "密码")
     private String password;
 
+    @ApiModelProperty(value = "是否删除")
     private Integer is_del;
 
+    @ApiModelProperty(value = "创建时间")
     private Integer create_time;
 
+    @ApiModelProperty(value = "更新时间")
     private Integer update_time;
 
     public Integer getUid() {
