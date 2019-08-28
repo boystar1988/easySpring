@@ -9,6 +9,7 @@
     <result column="create_time" jdbcType="INTEGER" property="create_time" />
     <result column="update_time" jdbcType="INTEGER" property="update_time" />
   </resultMap>
+  <cache type="com.jianzhong.demo.utils.RedisCacheUtil" eviction="LRU" flushInterval="6000000" size="1024" readOnly="false"/>
   <sql id="Base_Column_List">
     uid, username, password, is_del, create_time, update_time
   </sql>
