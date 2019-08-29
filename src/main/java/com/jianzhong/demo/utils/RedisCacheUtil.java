@@ -1,6 +1,5 @@
 package com.jianzhong.demo.utils;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.cache.Cache;
 import org.springframework.dao.DataAccessException;
@@ -59,7 +58,7 @@ public class RedisCacheUtil implements Cache
 //            log.info("保存"+key.toString());
         }catch (Exception e){
             e.printStackTrace();
-            log.error("redis保存数据异常！");
+            log.error("Redis保存数据失败！");
         }
     }
 
@@ -73,7 +72,7 @@ public class RedisCacheUtil implements Cache
             }
         }catch (Exception e){
             e.printStackTrace();
-            log.error("redis获取数据异常！");
+            log.error("Redis获取数据失败！");
         }
         return null;
     }
@@ -86,7 +85,7 @@ public class RedisCacheUtil implements Cache
                 return redisTemplate.expire(key.toString(),1,TimeUnit.DAYS);
         }catch (Exception e){
             e.printStackTrace();
-            log.error("redis获取数据异常！");
+            log.error("Redis删除数据失败！");
         }
         return null;
     }
@@ -104,7 +103,7 @@ public class RedisCacheUtil implements Cache
                 return size;
             }
         });
-        log.info(">>>>>>>>>>>>>>>>>>>>>>>>clear: 清除了" + size + "个对象");
+        log.info("Redis清除了" + size + "个对象");
     }
 
     @Override

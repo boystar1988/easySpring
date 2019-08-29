@@ -16,22 +16,23 @@ public class UrlFilter implements Filter
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        log.info("----------------------->过滤器被创建");
+        log.info("过滤器被创建成功");
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        String requestURI = req.getRequestURI();
-        if (!requestURI.contains("index") && !requestURI.contains("detail")) {
-            servletRequest.getRequestDispatcher("/401").forward(servletRequest, servletResponse);
-        } else {
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
+//        HttpServletRequest req = (HttpServletRequest) servletRequest;
+//        String requestURI = req.getRequestURI();
+//        if (!requestURI.contains("index") && !requestURI.contains("detail")) {
+//            servletRequest.getRequestDispatcher("/401").forward(servletRequest, servletResponse);
+//        } else {
+//            filterChain.doFilter(servletRequest, servletResponse);
+//        }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override
     public void destroy() {
-        log.info("----------------------->过滤器被销毁");
+        log.info("过滤器已销毁");
     }
 }

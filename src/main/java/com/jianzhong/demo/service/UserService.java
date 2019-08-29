@@ -17,13 +17,12 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class UserService implements Serializable
 {
-
     @Autowired
     UserMapper userMapper;
     @Autowired
     private ApplicationContext publisher;
 
-    public int deleteByPrimaryKey(Integer uid)
+    public int deleteByPrimaryKey(Long uid)
     {
         return userMapper.deleteByPrimaryKey(uid);
     }
@@ -43,7 +42,7 @@ public class UserService implements Serializable
         return uid;
     }
 
-    public User selectByPrimaryKey(Integer uid)
+    public User selectByPrimaryKey(Long uid)
     {
         return userMapper.selectByPrimaryKey(uid);
     }

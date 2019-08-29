@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class User implements Serializable
 {
     @ApiModelProperty(value = "用户ID")
-    private Integer uid;
+    private Long uid;
 
     @ApiModelProperty(value = "用户名")
     private String username;
@@ -24,11 +24,14 @@ public class User implements Serializable
     @ApiModelProperty(value = "更新时间")
     private Integer update_time;
 
-    public Integer getUid() {
+    @ApiModelProperty(value = "是否VIP")
+    public Integer is_vip;
+
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(long uid) {
         this.uid = uid;
     }
 
