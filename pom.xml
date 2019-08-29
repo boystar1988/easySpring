@@ -97,9 +97,9 @@
             <version>2.5.0</version>
         </dependency>
         <dependency>
-             <groupId>com.github.xiaoymin</groupId>
-             <artifactId>swagger-bootstrap-ui</artifactId>
-             <version>1.9.3</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.3</version>
         </dependency>
         <!-- 这里包含了Zookeeper依赖和Dubbo依赖 -->
         <dependency>
@@ -131,6 +131,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!-- mybatis自动生成实体 -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -164,6 +165,30 @@
                     <!-- 自动生成的配置 -->
                     <configurationFile>
                         src/main/resources/mybatis/config/mybatis-generator.xml</configurationFile>
+                </configuration>
+            </plugin>
+            <!-- Docker maven -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <!-- docker私服的地址 -->
+                    <dockerHost>http://39.108.246.114:5000</dockerHost>
+                    <!--镜像名称以及版本号-->
+                    <imageName>spring:1.0.0</imageName>
+                    <!--依赖的基础镜像-->
+                    <baseImage>java</baseImage>
+                    <!--Dockerfile的位置 -->
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                    <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
         </plugins>
