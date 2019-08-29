@@ -15,7 +15,7 @@
         </commentGenerator>
 
         <!-- 数据库的相关配置 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/spring" userId="root" password="root"/>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/spring" userId="root" password="123456"/>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
