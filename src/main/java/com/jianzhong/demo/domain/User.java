@@ -1,10 +1,16 @@
 package com.jianzhong.demo.domain;
 
 import io.swagger.annotations.ApiModelProperty;
-
+import org.apache.catalina.Role;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-public class User implements Serializable
+public class User implements Serializable, UserDetails
 {
     @ApiModelProperty(value = "用户ID")
     private Long uid;
@@ -24,8 +30,11 @@ public class User implements Serializable
     @ApiModelProperty(value = "更新时间")
     private Integer update_time;
 
-    @ApiModelProperty(value = "是否VIP")
-    public Integer is_vip;
+    @ApiModelProperty(value = "角色")
+    private List<Role> roles;
+
+    @ApiModelProperty(value = "是否启用")
+    private Integer is_enabled;
 
     public Long getUid() {
         return uid;
@@ -51,6 +60,22 @@ public class User implements Serializable
         this.password = password == null ? null : password.trim();
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Integer getIs_enabled() {
+        return is_enabled;
+    }
+
+    public void setIs_enabled(Integer is_enabled) {
+        this.is_enabled = is_enabled;
+    }
+
     public Integer getIs_del() {
         return is_del;
     }
@@ -73,5 +98,33 @@ public class User implements Serializable
 
     public void setUpdate_time(Integer update_time) {
         this.update_time = update_time;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
+        return authorities;
+    }
+
+    //账号过期
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    //账号锁定
+    public boolean isAccountNonLocked(){
+        return true;
+    }
+
+    //密码过期
+    public boolean isCredentialsNonExpired(){
+        return true;
+    }
+
+    //账号禁用
+    public boolean isEnabled(){
+        return this.getIs_enabled() > 0;
     }
 }

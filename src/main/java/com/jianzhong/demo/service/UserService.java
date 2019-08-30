@@ -6,6 +6,9 @@ import com.jianzhong.demo.repository.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -15,7 +18,7 @@ import java.util.Map;
 @Service
 @Slf4j
 @SuppressWarnings("unchecked")
-public class UserService implements Serializable
+public class UserService implements Serializable, UserDetailsService
 {
     @Autowired
     UserMapper userMapper;
@@ -60,6 +63,15 @@ public class UserService implements Serializable
     public int updateByPrimaryKey(User record)
     {
         return userMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = userMapper.loadUserByUsername(s);
+        if (user == null) {
+            throw new UsernameNotFoundException("用户名不正确");
+        }
+        return user;
     }
 
 }
