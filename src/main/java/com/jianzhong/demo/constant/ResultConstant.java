@@ -8,6 +8,8 @@ public class ResultConstant
     public static final int CODE_ERROR  = 1;
     //页码未找到
     public static final int CODE_NOTFOUND  = 404;
+    //提交方式有误
+    public static final int CODE_ERRORMETHOD  = 405;
     //未授权
     public static final int CODE_NOAUTH  = 401;
     //没有权限

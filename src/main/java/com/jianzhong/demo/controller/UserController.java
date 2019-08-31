@@ -100,7 +100,7 @@ public class UserController extends CommonController
     @ApiOperation(value = "更新用户" ,  notes="新增，修改用户")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "uid",value = "用户ID",defaultValue = "0",dataType = "int"),
-        @ApiImplicitParam(name = "username",value = "用户名",defaultValue = "20",dataType = "int",required = true)
+        @ApiImplicitParam(name = "username",value = "用户名",defaultValue = "",dataType = "int",required = true)
     })
     @ApiResponses({
         @ApiResponse(code = 200,message = "操作成功"),

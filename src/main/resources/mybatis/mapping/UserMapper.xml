@@ -13,6 +13,12 @@
   <sql id="Base_Column_List">
     uid, username, password, is_del, create_time, update_time
   </sql>
+  <select id="loadUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sp_user
+    where username = #{username,jdbcType=VARCHAR} and is_del = 0
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

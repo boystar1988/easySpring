@@ -57,5 +57,15 @@ public class ErrorController
         return result;
     }
 
+    @RequestMapping("/405")
+    @ResponseBody
+    public ResultVo ErrorMethod()
+    {
+        result.setCode(ResultConstant.CODE_ERRORMETHOD);
+        result.setMsg("提交方式不正确");
+        result.setData(null);
+        return result;
+    }
+
 
 }
