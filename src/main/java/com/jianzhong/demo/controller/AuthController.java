@@ -1,6 +1,7 @@
 package com.jianzhong.demo.controller;
 
 import com.jianzhong.demo.domain.User;
+import com.jianzhong.demo.service.AuthService;
 import com.jianzhong.demo.service.UserService;
 import com.jianzhong.demo.utils.RedisUtil;
 import com.jianzhong.demo.utils.StringUtil;
@@ -27,13 +28,9 @@ import java.util.Map;
 public class AuthController extends CommonController
 {
     @Autowired
-    UserService userService;
+    AuthService authService;
     @Autowired
     AuthenticationManager authenticationManager;
-    @Autowired
-    RedisUtil redisUtil;
-    @Autowired
-    StringUtil stringUtil;
 
     @ApiOperation(value = "登录" ,  notes="用户登录授权")
     @ApiImplicitParams({
@@ -57,45 +54,30 @@ public class AuthController extends CommonController
         if(username.equals("") || password.equals("")){
             return this.error("账号密码不能为空",1);
         }
-        log.info("username="+username);
-        log.info("password="+password);
-        Map tokenRes = this.generateToken(username,password);
+        Map tokenRes = authService.login(username,password);
         if(tokenRes.get("code").toString().equals("1")){
             return this.error(tokenRes.get("msg").toString(),1);
         }
         String token = tokenRes.get("data").toString();
         Map res = new HashMap();
         res.put("access_token",token);
-        log.info("access_token="+token);
+        log.info("用户{"+username+"}登录成功，token："+token);
         return this.success(res,"success");
     }
 
-    private Map generateToken(String username, String password) {
-        Map res = new HashMap();
-        try{
-            UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, password);
-            // Perform the security
-            final Authentication authentication = authenticationManager.authenticate(upToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            // Reload password post-security so we can generate token
-            final User userDetails = userService.loadUserByUsername(username);
-            if(userDetails==null){
-                throw new Exception("用户不存在");
-            }
-            // 持久化的redis
-            String token = StringUtil.getRandomString(32);
-            redisUtil.set(token, userDetails.getUsername(),0);
-            res.put("code",0);
-            res.put("msg","success");
-            res.put("data",token);
-            return res;
-        }catch (Exception e){
-            res.put("code",1);
-            res.put("msg",e.getMessage());
-            res.put("data",null);
-            log.error(e.getLocalizedMessage());
-            log.error(e.toString());
-            return res;
-        }
+    @ApiOperation(value = "注销" ,  notes="用户注销")
+    @ApiResponses({
+            @ApiResponse(code = 200,message = "操作成功"),
+            @ApiResponse(code = 201,message = "创建成功"),
+            @ApiResponse(code = 401,message = "未经授权"),
+            @ApiResponse(code = 403,message = "你没有权限访问该页面"),
+            @ApiResponse(code = 404,message = "页面未找到")
+    })
+    @RequestMapping(value = "/logout",method = RequestMethod.POST)
+    @ResponseBody
+    @Transactional
+    public ResultVo logout() {
+        authService.logout();
+        return this.success(null,"success");
     }
 }

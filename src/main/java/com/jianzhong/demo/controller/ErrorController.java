@@ -42,7 +42,7 @@ public class ErrorController
     public ResultVo NoPermission()
     {
         result.setCode(ResultConstant.CODE_NOPERMISSION);
-        result.setMsg("你没有权限访问该页面");
+        result.setMsg("会话已过期，请重新登录");
         result.setData(null);
         return result;
     }

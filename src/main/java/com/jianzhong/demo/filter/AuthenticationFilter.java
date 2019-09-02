@@ -1,5 +1,6 @@
 package com.jianzhong.demo.filter;
 
+import com.jianzhong.demo.constant.AuthConstant;
 import com.jianzhong.demo.service.UserService;
 import com.jianzhong.demo.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,27 +25,21 @@ public class AuthenticationFilter extends OncePerRequestFilter
 
     @Autowired
     RedisUtil redisUtil;
-    String tokenHead = "";
-    String tokenHeader = "x-auth-token";
     @Autowired
     private UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = request.getHeader(this.tokenHeader);
-        log.info("authHeader="+authHeader);
-        if (authHeader != null && authHeader.startsWith(tokenHead)) {
-            final String authToken = authHeader.substring(tokenHead.length()); // The part after "Bearer "
-            log.info("authToken="+authToken);
-            if (!authToken.equals("") && redisUtil.exists(authToken)) {
-                String username = redisUtil.get(authToken,0);
+        String authHeader = request.getHeader(AuthConstant.AUTH_HEADER_FIELD_TOKEN);
+        if (authHeader != null && authHeader.startsWith(AuthConstant.AUTH_HEADER_PREFIX_TOKEN)) {
+            final String authToken = authHeader.substring(AuthConstant.AUTH_HEADER_PREFIX_TOKEN.length()); // The part after "Bearer "
+            if (!authToken.equals("") && redisUtil.exists(AuthConstant.AUTH_REDIS_FIELD_TOKEN+authToken)) {
+                String username = redisUtil.get(AuthConstant.AUTH_REDIS_FIELD_TOKEN+authToken,0);
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = userService.loadUserByUsername(username);
-                    log.info("username="+username);
                     //可以校验token和username是否有效，目前由于token对应username存在redis，都以默认都是有效的
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    log.info("authenticated user " + username + ", setting security context");
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }

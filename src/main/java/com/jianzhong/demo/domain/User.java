@@ -1,7 +1,8 @@
 package com.jianzhong.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModelProperty;
-//import org.apache.catalina.Role;
 import org.apache.catalina.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,6 +39,14 @@ public class User implements UserDetails
 
     @ApiModelProperty(value = "是否启用")
     private Integer is_enabled;
+
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+
+    @JsonIgnore
+    private Collection<? extends GrantedAuthority> authorities;
 
     public Long getUid() {
         return uid;
@@ -111,6 +120,7 @@ public class User implements UserDetails
         this.update_time = update_time;
     }
 
+    @JsonIgnoreProperties
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {

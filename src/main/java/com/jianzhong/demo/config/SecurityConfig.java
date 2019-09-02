@@ -44,8 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().passwordEncoder(new AuthPasswordEncoder())
-//                .withUser("b").password("123456").roles("ADMIN");
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
@@ -57,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 // 对于获取token的rest api要允许匿名访问
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/auth/login")
+                .permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
         httpSecurity
@@ -68,10 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-//        DelegatingPasswordEncoder delegatingPasswordEncoder = (DelegatingPasswordEncoder) PasswordEncoderFactories.createDelegatingPasswordEncoder();
-//        delegatingPasswordEncoder.setDefaultPasswordEncoderForMatches(new AuthPasswordEncoder());
-//        return  delegatingPasswordEncoder;
+        return new AuthPasswordEncoder();
     }
 
 }

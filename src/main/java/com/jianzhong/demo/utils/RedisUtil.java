@@ -99,7 +99,6 @@ public class RedisUtil
             jedis.select(indexdb);
             return jedis.set(key, value);
         } catch (Exception e) {
-
             log.error(e.getMessage());
             return "0";
         } finally {
