@@ -85,6 +85,14 @@ public class AuthService
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
+    public User getUserByToken(String token){
+        String username = redisUtil.get(AuthConstant.AUTH_REDIS_FIELD_TOKEN+token,0);
+        if(username != null){
+            return userService.loadUserByUsername(username);
+        }
+        return null;
+    }
+
     public long getUid(){
         return this.getUser().getUid();
     }

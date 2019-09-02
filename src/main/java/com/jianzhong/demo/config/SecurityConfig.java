@@ -8,20 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @Slf4j
@@ -57,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 // 对于获取token的rest api要允许匿名访问
                 .antMatchers(
                         "/auth/login","/webjars/**","/swagger-resources/**",
-                        "/v2/api-docs","/doc.html","/swagger-ui.html")
+                        "/v2/api-docs","/doc.html","/swagger-ui.html","/ws/**")
                 .permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
