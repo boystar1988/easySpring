@@ -24,20 +24,23 @@ public class AuthenticationFilter extends OncePerRequestFilter
 
     @Autowired
     RedisUtil redisUtil;
-    String tokenHead = "Bearer ";
-    String tokenHeader = "Authorization";
+    String tokenHead = "";
+    String tokenHeader = "x-auth-token";
     @Autowired
     private UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(this.tokenHeader);
+        log.info("authHeader="+authHeader);
         if (authHeader != null && authHeader.startsWith(tokenHead)) {
             final String authToken = authHeader.substring(tokenHead.length()); // The part after "Bearer "
-            if (authToken.equals("") && redisUtil.exists(authToken)) {
+            log.info("authToken="+authToken);
+            if (!authToken.equals("") && redisUtil.exists(authToken)) {
                 String username = redisUtil.get(authToken,0);
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    UserDetails userDetails = this.userService.loadUserByUsername(username);
+                    UserDetails userDetails = userService.loadUserByUsername(username);
+                    log.info("username="+username);
                     //可以校验token和username是否有效，目前由于token对应username存在redis，都以默认都是有效的
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

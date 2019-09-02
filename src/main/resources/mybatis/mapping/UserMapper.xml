@@ -8,10 +8,11 @@
     <result column="is_del" jdbcType="BIT" property="is_del" />
     <result column="create_time" jdbcType="INTEGER" property="create_time" />
     <result column="update_time" jdbcType="INTEGER" property="update_time" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
   </resultMap>
   <cache type="com.jianzhong.demo.utils.RedisCacheUtil" eviction="LRU" flushInterval="6000000" size="1024" readOnly="false"/>
   <sql id="Base_Column_List">
-    uid, username, password, is_del, create_time, update_time
+    uid, username, password, is_del, create_time, update_time, role
   </sql>
   <select id="loadUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
@@ -36,10 +37,10 @@
   </delete>
   <insert id="insert" parameterType="com.jianzhong.demo.domain.User">
     insert into sp_user (uid, username, password, 
-      is_del, create_time, update_time
+      is_del, create_time, update_time, role
       )
     values (#{uid,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-      #{is_del,jdbcType=BIT}, #{create_time,jdbcType=INTEGER}, #{update_time,jdbcType=INTEGER}
+      #{is_del,jdbcType=BIT}, #{create_time,jdbcType=INTEGER}, #{update_time,jdbcType=INTEGER}, #{role,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jianzhong.demo.domain.User">
@@ -63,6 +64,9 @@
       <if test="update_time != null">
         update_time,
       </if>
+      <if test="role != null">
+        role,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="uid != null">
@@ -82,6 +86,9 @@
       </if>
       <if test="update_time != null">
         #{update_time,jdbcType=INTEGER},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -103,6 +110,9 @@
       <if test="update_time != null">
         update_time = #{update_time,jdbcType=INTEGER},
       </if>
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
+      </if>
     </set>
     where uid = #{uid,jdbcType=BIGINT}
   </update>
@@ -112,7 +122,8 @@
       password = #{password,jdbcType=VARCHAR},
       is_del = #{is_del,jdbcType=BIT},
       create_time = #{create_time,jdbcType=INTEGER},
-      update_time = #{update_time,jdbcType=INTEGER}
+      update_time = #{update_time,jdbcType=INTEGER},
+      role = #{role,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=BIGINT}
   </update>
 </mapper>

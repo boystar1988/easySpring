@@ -1,16 +1,16 @@
 package com.jianzhong.demo.domain;
 
 import io.swagger.annotations.ApiModelProperty;
+//import org.apache.catalina.Role;
 import org.apache.catalina.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class User implements Serializable, UserDetails
+public class User implements UserDetails
 {
     @ApiModelProperty(value = "用户ID")
     private Long uid;
@@ -31,6 +31,9 @@ public class User implements Serializable, UserDetails
     private Integer update_time;
 
     @ApiModelProperty(value = "角色")
+    private String role;
+
+    @ApiModelProperty(value = "系统角色")
     private List<Role> roles;
 
     @ApiModelProperty(value = "是否启用")
@@ -58,6 +61,14 @@ public class User implements Serializable, UserDetails
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String roles) {
+        this.role = role;
     }
 
     public List<Role> getRoles() {
@@ -125,6 +136,6 @@ public class User implements Serializable, UserDetails
 
     //账号禁用
     public boolean isEnabled(){
-        return this.getIs_enabled() > 0;
+        return true;
     }
 }

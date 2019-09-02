@@ -1,11 +1,7 @@
 package com.jianzhong.demo.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.github.xiaoymin.swaggerbootstrapui.util.CommonUtils;
 import com.jianzhong.demo.domain.User;
 import com.jianzhong.demo.service.UserService;
-import com.jianzhong.demo.utils.IdUtil;
 import com.jianzhong.demo.utils.RedisUtil;
 import com.jianzhong.demo.utils.StringUtil;
 import com.jianzhong.demo.vo.ResultVo;
@@ -16,14 +12,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Api(tags = "用户模块",value = "用户接口")
@@ -61,12 +54,11 @@ public class AuthController extends CommonController
         @RequestParam(value = "username",defaultValue = "") String username,
         @RequestParam(value = "password",defaultValue = "") String password
     ) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String pa = encoder.encode("123456");
-        log.info(pa);
         if(username.equals("") || password.equals("")){
             return this.error("账号密码不能为空",1);
         }
+        log.info("username="+username);
+        log.info("password="+password);
         Map tokenRes = this.generateToken(username,password);
         if(tokenRes.get("code").toString().equals("1")){
             return this.error(tokenRes.get("msg").toString(),1);
@@ -87,6 +79,9 @@ public class AuthController extends CommonController
             SecurityContextHolder.getContext().setAuthentication(authentication);
             // Reload password post-security so we can generate token
             final User userDetails = userService.loadUserByUsername(username);
+            if(userDetails==null){
+                throw new Exception("用户不存在");
+            }
             // 持久化的redis
             String token = StringUtil.getRandomString(32);
             redisUtil.set(token, userDetails.getUsername(),0);
@@ -98,7 +93,8 @@ public class AuthController extends CommonController
             res.put("code",1);
             res.put("msg",e.getMessage());
             res.put("data",null);
-            log.error(e.getMessage());
+            log.error(e.getLocalizedMessage());
+            log.error(e.toString());
             return res;
         }
     }
