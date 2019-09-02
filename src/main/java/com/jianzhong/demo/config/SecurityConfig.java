@@ -55,7 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 // 对于获取token的rest api要允许匿名访问
-                .antMatchers("/auth/login")
+                .antMatchers(
+                        "/auth/login","/webjars/**","/swagger-resources/**",
+                        "/v2/api-docs","/doc.html","/swagger-ui.html")
                 .permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
