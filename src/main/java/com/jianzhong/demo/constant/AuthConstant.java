@@ -5,9 +5,8 @@ import java.util.Map;
 
 public class AuthConstant
 {
-    public static final String AUTH_HEADER_PREFIX_TOKEN    = "";
     public static final String AUTH_REDIS_FIELD_TOKEN      = "es:token:";
-    public static final String AUTH_REDIS_FIELD_USER_TOKEN = "es:user:";
+    public static final String AUTH_REDIS_FIELD_USER_TOKEN = "es:user:token:";
 
     public static final String AUTH_HEADER_FIELD_TOKEN     = "x-auth-token";
     public static final String AUTH_HEADER_FIELD_DEVICE    = "x-auth-device";

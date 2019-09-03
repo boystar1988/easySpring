@@ -1,22 +1,32 @@
 #服务端
 server:
-  port: 8181
   tomcat:
     uri-encoding: utf-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8181
+  connection-timeout: 5000ms
 
 #框架
 spring:
+  application:
+    #    name: block-dubbo-provider
+    name: block-dubbo-consume
+
+
+
   # 数据库
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/spring?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+
   # Redis
   redis:
     host: 127.0.0.1
     port: 6379
-    timeout: 0
+    timeout: 5000
     password: 123456
     database: 0
     jedis:
@@ -39,7 +49,7 @@ spring:
   mail:
     host: smtp.exmail.qq.com
     port: 465
-    username: abc@xyz.cn
+    username: ceshi@jianzhongbang.cn
     password: Test123
     default-encoding: UTF-8
     properties:
@@ -54,12 +64,21 @@ spring:
           starttls:
             enable: true
             required: true
+  # Session
+  session:
+    store-type: redis
+
 
 #数据库持久层
 mybatis:
   mapper-locations: classpath:/mybatis/mapping/*Mapper.xml
   type-aliases-package: com.jianzhong.demo.domain
   config-location: classpath:/mybatis/config/mybatis-config.xml
+  configuration-properties:
+    cacheEnabled: true
+    lazyLoadingEnabled: false
+    aggressiveLazyLoading: true
+
 
 #日志
 logging:
@@ -75,3 +94,24 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
   page-size-zero: true
+
+#提供方配置
+#dubbo:
+#  application:
+#    name: block-dubbo-provider
+#  registry:
+#    address: 127.0.0.1:2181
+#    protocol: zookeeper
+#  protocol:
+#    name: dubbo
+#    port: 20880
+#  scan:
+#    base-packages: com.boot.consume
+
+#消费方配置
+dubbo:
+  application:
+    name: block-dubbo-consume
+  registry:
+    address: 127.0.0.1:2181
+    protocol: zookeeper

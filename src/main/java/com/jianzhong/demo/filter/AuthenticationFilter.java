@@ -30,9 +30,8 @@ public class AuthenticationFilter extends OncePerRequestFilter
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = request.getHeader(AuthConstant.AUTH_HEADER_FIELD_TOKEN);
-        if (authHeader != null && authHeader.startsWith(AuthConstant.AUTH_HEADER_PREFIX_TOKEN)) {
-            final String authToken = authHeader.substring(AuthConstant.AUTH_HEADER_PREFIX_TOKEN.length()); // The part after "Bearer "
+        final String authToken = request.getHeader(AuthConstant.AUTH_HEADER_FIELD_TOKEN);
+        if (authToken != null) {
             if (!authToken.equals("") && redisUtil.exists(AuthConstant.AUTH_REDIS_FIELD_TOKEN+authToken)) {
                 String username = redisUtil.get(AuthConstant.AUTH_REDIS_FIELD_TOKEN+authToken,0);
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

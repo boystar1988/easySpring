@@ -1,0 +1,88 @@
+version: '3'
+services:
+  spring:
+    container_name: spring
+    privileged: true
+    image: spring:latest
+    depends_on:
+      - mysql
+      - rabbitmq
+      - redis
+    networks:
+      spnet:
+    restart: always
+    environment:
+      - DEBUG=true
+    ports:
+      - 8181:8181
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    command:
+
+  mysql:
+    container_name: mysql
+      privileged: true
+      image: mysql:latest
+      environment:
+        - MYSQL_ROOT_PWD=123456
+        - MYSQL_USER=usersp
+        - MYSQL_PWD=123456
+      networks:
+        spnet:
+      restart: always
+      ports:
+        - 3306:3306
+      volumes:
+        - ${PWD}/db:/var/lib/mysql
+        - ${PWD}/conf:/etc/my.cnf
+        - ${PWD}/init:/docker-entrypoint-initdb.d/
+
+  rabbitmq:
+    container_name: rabbit
+    privileged: true
+    hostname: true
+    image: mysql:latest
+    environment:
+      - RABBITMQ_DEFAULT_VHOST=/
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=123456
+    networks:
+      spnet:
+    restart: always
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - ${PWD}/data:/var/lib/rabbitmq
+
+  redis:
+    container_name: redis
+    privileged: true
+    image: redis:latest
+    environment:
+      - REDIS_PWD=123456
+    networks:
+      spnet:
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ${PWD}/data:/var/lib/redis
+
+  nginx:
+    container_name: nginx
+    image: nginx:1.13
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${PWD}/nginx/conf.d:/etc/nginx/conf.d
+
+networks:
+  spnet:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.5.0/24

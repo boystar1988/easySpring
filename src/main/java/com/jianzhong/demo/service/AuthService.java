@@ -106,12 +106,15 @@ public class AuthService
     }
 
     public String getDeviceNameByDevice(String device){
-        Map<String,String> deviceMap = AuthConstant.deviceMap;
-        return String.valueOf(deviceMap.get(device));
+        return AuthConstant.deviceMap.get(device);
     }
 
     public String getVersion(){
         return String.valueOf(request.getHeader(AuthConstant.AUTH_HEADER_FIELD_VERSION));
+    }
+
+    public String getUuid(){
+        return String.valueOf(request.getHeader(AuthConstant.AUTH_HEADER_FIELD_UUID));
     }
 
 }
