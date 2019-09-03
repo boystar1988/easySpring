@@ -8,11 +8,11 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.jianzhong</groupId>
-    <artifactId>demo</artifactId>
+    <groupId>com.boystar</groupId>
+    <artifactId>easySpring</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
-    <description>Demo project for Spring Boot</description>
+    <name>easySpring</name>
+    <description>easy for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -146,6 +146,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.4.2.RELEASE</version>
+                <configuration>
+                    <fork>true</fork>
+                    <mainClass>com.jianzhong.demo.DemoApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- mybatis自动生成实体 -->
             <plugin>
@@ -190,7 +202,7 @@
                 <version>1.0.0</version>
                 <configuration>
                     <!-- docker私服的地址 -->
-                    <dockerHost>http://39.108.246.114:5000</dockerHost>
+<!--                    <dockerHost>http://39.108.246.114:5000</dockerHost>-->
                     <!--镜像名称以及版本号-->
                     <imageName>spring:1.0.0</imageName>
                     <!--依赖的基础镜像-->

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint("/ws/{asset_type}/{foreign_id}/{token}")
@@ -30,19 +31,33 @@ public class WebSocketServer {
     public void onOpen(Session session, EndpointConfig config,@PathParam("asset_type") String assetType, @PathParam("foreign_id") long foreignId, @PathParam("token") String token) throws Exception {
         this.session = session;
         webSocketSet.add(this);
-        String sessionid = String.valueOf(config.getUserProperties().get("sessionid"));
-        log.info("打开连接. assetType={}, foreignId={}, token={},session={}", assetType, foreignId, token,sessionid);
+        addOnlineCount();
+        log.info("打开连接. 当前人数：" + getOnlineCount());
+        try {
+            sendMessage("连接成功.session="+this.session.getId());
+        } catch (IOException e) {
+            log.error("websocket IO异常");
+        }
     }
 
     @OnClose
     public void onClose() {
         webSocketSet.remove(this);
-        log.info("关闭连接. "+this.session);
+        subOnlineCount();
+        log.info("关闭连接. 当前人数：" + getOnlineCount());
     }
 
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("收到来自客户端的消息: " + message);
+        log.info("【客户端】: " + message );
+        //群发消息
+        for (WebSocketServer item : webSocketSet) {
+            try {
+                item.sendMessage(message);
+            } catch (Exception e) {
+                log.error(e.getLocalizedMessage());
+            }
+        }
     }
 
     @OnError
@@ -52,7 +67,7 @@ public class WebSocketServer {
 
     public void sendMessage(String message) throws Exception {
         if (this.session.isOpen()) {
-            this.session.getBasicRemote().sendText("收到信息. ");
+            this.session.getBasicRemote().sendText("收到信息:"+message);
         }
     }
 

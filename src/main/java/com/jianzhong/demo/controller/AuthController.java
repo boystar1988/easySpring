@@ -1,26 +1,17 @@
 package com.jianzhong.demo.controller;
 
-import com.jianzhong.demo.domain.User;
 import com.jianzhong.demo.service.AuthService;
-import com.jianzhong.demo.service.UserService;
-import com.jianzhong.demo.utils.RedisUtil;
-import com.jianzhong.demo.utils.StringUtil;
 import com.jianzhong.demo.vo.ResultVo;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(tags = "用户模块",value = "用户接口")
+@Api(tags = "授权模块",value = "用户接口")
 @RestController
 @RequestMapping("/auth")
 @SuppressWarnings("unchecked")
@@ -34,8 +25,8 @@ public class AuthController extends CommonController
 
     @ApiOperation(value = "登录" ,  notes="用户登录授权")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "username",value = "用户名",defaultValue = "",dataType = "int",required = true),
-        @ApiImplicitParam(name = "password",value = "密码",defaultValue = "",dataType = "int",required = true)
+        @ApiImplicitParam(name = "username",value = "用户名",defaultValue = "",dataType = "varchar",required = true),
+        @ApiImplicitParam(name = "password",value = "密码",defaultValue = "",dataType = "varchar",required = true)
     })
     @ApiResponses({
         @ApiResponse(code = 200,message = "操作成功"),

@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.util.*;
 
-import org.apache.catalina.Role;
-
 @Service
 @Slf4j
 @SuppressWarnings("unchecked")
@@ -70,8 +68,6 @@ public class UserService implements Serializable, UserDetailsService
         if (user == null) {
             throw new UsernameNotFoundException("用户名不正确");
         }
-        List<Role> roles = new ArrayList<>();
-        user.setRoles(roles);
         return user;
     }
 }

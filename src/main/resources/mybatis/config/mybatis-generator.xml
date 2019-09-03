@@ -39,8 +39,8 @@
 
         <table tableName="sp_user" domainObjectName="User" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
             <property name="useActualColumnNames" value="true" />
-            <columnOverride column="is_del" javaType="java.lang.Integer"/>
             <generatedKey column="uid" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="is_del" javaType="java.lang.Integer"/>
         </table>
     </context>
 </generatorConfiguration>

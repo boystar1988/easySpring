@@ -2,15 +2,18 @@ package com.jianzhong.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.catalina.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+@ApiModel
 public class User implements UserDetails
 {
     @ApiModelProperty(value = "用户ID")
@@ -32,10 +35,7 @@ public class User implements UserDetails
     private Integer update_time;
 
     @ApiModelProperty(value = "角色")
-    private String role;
-
-    @ApiModelProperty(value = "系统角色")
-    private List<Role> roles;
+    private String roles;
 
     @ApiModelProperty(value = "是否启用")
     private Integer is_enabled;
@@ -72,19 +72,11 @@ public class User implements UserDetails
         this.password = password == null ? null : password.trim();
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String roles) {
-        this.role = role;
-    }
-
-    public List<Role> getRoles() {
+    public String getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(String roles) {
         this.roles = roles;
     }
 
@@ -123,8 +115,9 @@ public class User implements UserDetails
     @JsonIgnoreProperties
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        ArrayList<String> roleList = new ArrayList<>(Arrays.asList(roles.split(",")));
+        for (String role : roleList) {
+            authorities.add(new SimpleGrantedAuthority(role));
         }
         return authorities;
     }
