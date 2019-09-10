@@ -2,6 +2,7 @@
 
 ## 目录结构
 ```
+- document                          文档
 - src
     -main
         -java
@@ -34,4 +35,8 @@
 -target                             目标
     
 ```
-    
+
+## 插件(plugin)整合
+maven
+    mybatis-generator
+    docker

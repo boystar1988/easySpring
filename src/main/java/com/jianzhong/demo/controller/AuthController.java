@@ -24,10 +24,6 @@ public class AuthController extends CommonController
     AuthenticationManager authenticationManager;
 
     @ApiOperation(value = "登录" ,  notes="用户登录授权")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "username",value = "用户名",defaultValue = "",dataType = "varchar",required = true),
-        @ApiImplicitParam(name = "password",value = "密码",defaultValue = "",dataType = "varchar",required = true)
-    })
     @ApiResponses({
         @ApiResponse(code = 200,message = "操作成功"),
         @ApiResponse(code = 201,message = "创建成功"),
@@ -39,8 +35,8 @@ public class AuthController extends CommonController
     @ResponseBody
     @Transactional
     public ResultVo login(
-        @RequestParam(value = "username",defaultValue = "") String username,
-        @RequestParam(value = "password",defaultValue = "") String password
+        @ApiParam(name = "username",value = "用户名",defaultValue = "") @RequestParam(value = "username",defaultValue = "") String username,
+        @ApiParam(name = "password",value = "密码",defaultValue = "") @RequestParam(value = "password",defaultValue = "") String password
     ) {
         if(username.equals("") || password.equals("")){
             return this.error("账号密码不能为空",1);

@@ -10,7 +10,7 @@ import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-@ServerEndpoint("/ws/{asset_type}/{foreign_id}/{token}")
+@ServerEndpoint("/websocket/{asset_type}/{foreign_id}/{token}")
 @RestController
 @Slf4j
 public class WebSocketServer {

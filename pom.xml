@@ -117,12 +117,17 @@
             <artifactId>swagger-bootstrap-ui</artifactId>
             <version>1.9.3</version>
         </dependency>
-        <!-- Dubbo -->
+        <!--热部署jar-->
         <dependency>
-            <groupId>com.alibaba.boot</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>0.2.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
         </dependency>
+        <!-- Dubbo -->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba.boot</groupId>-->
+<!--            <artifactId>dubbo-spring-boot-starter</artifactId>-->
+<!--            <version>0.2.0</version>-->
+<!--        </dependency>-->
         <!-- 配置中心 -->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->

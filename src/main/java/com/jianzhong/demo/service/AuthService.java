@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
@@ -52,7 +51,7 @@ public class AuthService
                 redisUtil.del(AuthConstant.AUTH_REDIS_FIELD_TOKEN+String.valueOf(i));
             }
             // 持久化的redis
-            String token = StringUtil.getRandomString(32);
+            String token = StringUtil.getRandomString(128);
             redisUtil.sadd(key,token);
             redisUtil.set(AuthConstant.AUTH_REDIS_FIELD_TOKEN+token, username,0);
             res.put("code",0);
