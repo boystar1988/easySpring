@@ -7,6 +7,7 @@ import com.jianzhong.demo.service.UserService;
 import com.jianzhong.demo.utils.IdUtil;
 import com.jianzhong.demo.vo.ResultVo;
 import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Map;
 @Api(tags = "用户模块",value = "用户接口")
 @RestController
 @RequestMapping("/user")
+@Slf4j
 @SuppressWarnings("unchecked")
 public class UserController extends CommonController
 {
@@ -42,8 +44,8 @@ public class UserController extends CommonController
         @RequestParam(value = "pageNum",defaultValue = "1") String pageNum,
         @RequestParam(value = "pageSize",defaultValue = "20") String pageSize
     ) {
-        List<User> data = userService.select();
         PageHelper.startPage(Integer.parseInt(pageNum),Integer.parseInt(pageSize));
+        List<User> data = userService.select();
         PageInfo<User> pageInfo = new PageInfo<>(data);
         return this.success(pageInfo,"success");
     }

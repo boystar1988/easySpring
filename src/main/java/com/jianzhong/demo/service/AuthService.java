@@ -62,7 +62,6 @@ public class AuthService
             res.put("code",1);
             res.put("msg",e.getMessage());
             res.put("data",null);
-            log.error(e.getLocalizedMessage());
             log.error(e.toString());
             return res;
         }
