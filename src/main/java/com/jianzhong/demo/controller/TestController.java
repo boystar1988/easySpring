@@ -1,7 +1,7 @@
 package com.jianzhong.demo.controller;
 
-import com.jianzhong.demo.domain.SpUser;
-import com.jianzhong.demo.repository.SpUserRepository;
+import com.jianzhong.demo.domain.User;
+import com.jianzhong.demo.repository.UserRepository;
 import com.jianzhong.demo.service.AsyncTaskService;
 import com.jianzhong.demo.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class TestController extends CommonController{
     @Autowired
     private AsyncTaskService asyncTaskService;
     @Autowired
-    private SpUserRepository userRepository;
+    private UserRepository userRepository;
 
     @RequestMapping("/index")
     @ResponseBody
@@ -40,7 +40,8 @@ public class TestController extends CommonController{
     @RequestMapping("/user")
     @ResponseBody
     public ResultVo getUser(){
-        SpUser res = userRepository.findUserByName("b");
+        Long uid = Long.valueOf(2);
+        User res = userRepository.findUserByUid(uid);
         return this.success(res,"success");
     }
 

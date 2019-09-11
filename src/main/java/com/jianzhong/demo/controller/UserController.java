@@ -45,7 +45,7 @@ public class UserController extends CommonController
         @RequestParam(value = "pageSize",defaultValue = "20") String pageSize
     ) {
         PageHelper.startPage(Integer.parseInt(pageNum),Integer.parseInt(pageSize));
-        List<User> data = userService.select();
+        List<User> data = userService.findAll();
         PageInfo<User> pageInfo = new PageInfo<>(data);
         return this.success(pageInfo,"success");
     }
@@ -66,7 +66,7 @@ public class UserController extends CommonController
         if(intUid == 0){
             return this.error("缺少uid参数",404);
         }
-        User data = userService.selectByPrimaryKey(intUid);
+        User data = userService.findUserByUid(intUid);
         if(data == null){
             return this.error("未找到该用户",404);
         }else{
@@ -91,7 +91,7 @@ public class UserController extends CommonController
         if(intUid == 0){
             return this.error("缺少uid参数",404);
         }
-        int data = userService.deleteByPrimaryKey(intUid);
+        int data = userService.delete(intUid);
         if(data == 0){
             return this.error("未找到该用户",404);
         }else{
@@ -119,26 +119,20 @@ public class UserController extends CommonController
         @RequestParam(value = "username",defaultValue = "") String username
     ) {
         long intUid = Integer.parseInt(uid);
+        Map data = new HashMap();
         if(intUid == 0){
             //Todo:新增
-            User insertUser = new User();
-            //分布式自增长ID
-            intUid = idUtil.nextId();
-            insertUser.setUid(intUid);
-            insertUser.setUsername(username);
-            int insertUid = userService.insertSelective(insertUser);
+            Long insertUid = userService.insert(data);
             if(insertUid > 0){
                 Map res = new HashMap();
-                res.put("uid",String.valueOf(insertUser.getUid()));
+                res.put("uid",String.valueOf(insertUid));
                 return this.success(res,"新增成功");
             }else{
                 return this.error("新增失败",1);
             }
         }else{
             //Todo:更新
-            User user = userService.selectByPrimaryKey(intUid);
-            user.setUsername(username);
-            int res = userService.updateByPrimaryKeySelective(user);
+            int res = userService.updateUserByUid(intUid,data);
             if(res > 0){
                 return this.success(null,"更新成功");
             }else{

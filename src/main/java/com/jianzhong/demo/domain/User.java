@@ -1,115 +1,58 @@
 package com.jianzhong.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import org.hibernate.annotations.Cache;
 
-@ApiModel
-public class User implements UserDetails
-{
+@Entity
+@Cache(region="common", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Setter @Getter @ToString
+@Table(name = "sp_user")
+public class User implements UserDetails {
+
     @ApiModelProperty(value = "用户ID")
+    @Id @Column(name = "uid", nullable = false)
     private Long uid;
 
     @ApiModelProperty(value = "用户名")
+    @Column(columnDefinition = "varchar(32) comment '用户名'")
     private String username;
 
     @ApiModelProperty(value = "密码")
+    @Column(columnDefinition = "varchar(48) comment '密码'")
     private String password;
 
-    @ApiModelProperty(value = "是否删除")
-    private Integer is_del;
-
     @ApiModelProperty(value = "创建时间")
-    private Integer create_time;
+    private int create_time;
 
     @ApiModelProperty(value = "更新时间")
-    private Integer update_time;
+    private int update_time;
+
+    @ApiModelProperty(value = "是否删除")
+    private int is_del;
+
+    @ApiModelProperty(value = "是否启用")
+    private int is_enabled;
 
     @ApiModelProperty(value = "角色")
     private String roles;
-
-    @ApiModelProperty(value = "是否启用")
-    private Integer is_enabled;
 
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
-
-    @JsonIgnore
-    private Collection<? extends GrantedAuthority> authorities;
-
-    public Long getUid() {
-        return uid;
-    }
-
-    public void setUid(long uid) {
-        this.uid = uid;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
-
-    public Integer getIs_enabled() {
-        return is_enabled;
-    }
-
-    public void setIs_enabled(Integer is_enabled) {
-        this.is_enabled = is_enabled;
-    }
-
-    public Integer getIs_del() {
-        return is_del;
-    }
-
-    public void setIs_del(Integer is_del) {
-        this.is_del = is_del;
-    }
-
-    public Integer getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(Integer create_time) {
-        this.create_time = create_time;
-    }
-
-    public Integer getUpdate_time() {
-        return update_time;
-    }
-
-    public void setUpdate_time(Integer update_time) {
-        this.update_time = update_time;
-    }
 
     @JsonIgnoreProperties
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -140,4 +83,5 @@ public class User implements UserDetails
     public boolean isEnabled(){
         return true;
     }
+
 }

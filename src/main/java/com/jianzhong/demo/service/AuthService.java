@@ -2,7 +2,6 @@ package com.jianzhong.demo.service;
 
 import com.jianzhong.demo.constant.AuthConstant;
 import com.jianzhong.demo.domain.User;
-import com.jianzhong.demo.repository.UserMapper;
 import com.jianzhong.demo.utils.RedisUtil;
 import com.jianzhong.demo.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +19,6 @@ import java.util.*;
 @SuppressWarnings("unchecked")
 public class AuthService
 {
-    @Autowired
-    UserMapper userMapper;
     @Autowired
     UserService userService;
     @Autowired
