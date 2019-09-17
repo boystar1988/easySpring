@@ -45,7 +45,7 @@ public class UserController extends CommonController
         @RequestParam(value = "pageSize",defaultValue = "20") String pageSize
     ) {
         PageHelper.startPage(Integer.parseInt(pageNum),Integer.parseInt(pageSize));
-        List<User> data = userService.select();
+        List<User> data = userService.findAllUser();
         PageInfo<User> pageInfo = new PageInfo<>(data);
         return this.success(pageInfo,"success");
     }
@@ -66,7 +66,7 @@ public class UserController extends CommonController
         if(intUid == 0){
             return this.error("缺少uid参数",404);
         }
-        User data = userService.selectByPrimaryKey(intUid);
+        User data = userService.getUserWithUserMail(intUid);
         if(data == null){
             return this.error("未找到该用户",404);
         }else{
@@ -91,7 +91,7 @@ public class UserController extends CommonController
         if(intUid == 0){
             return this.error("缺少uid参数",404);
         }
-        int data = userService.deleteByPrimaryKey(intUid);
+        int data = userService.deleteUserByUid(intUid);
         if(data == 0){
             return this.error("未找到该用户",404);
         }else{
@@ -136,7 +136,7 @@ public class UserController extends CommonController
             }
         }else{
             //Todo:更新
-            User user = userService.selectByPrimaryKey(intUid);
+            User user = userService.findUserByUid(intUid);
             user.setUsername(username);
             int res = userService.updateByPrimaryKeySelective(user);
             if(res > 0){

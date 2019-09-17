@@ -9,10 +9,21 @@
     <result column="create_time" jdbcType="INTEGER" property="create_time" />
     <result column="update_time" jdbcType="INTEGER" property="update_time" />
     <result column="roles" jdbcType="VARCHAR" property="roles" />
+
+    <collection property="userMails" ofType="com.jianzhong.demo.domain.UserMail" column="uid">
+      <id property="user_mail_id" column="user_mail_id"></id>
+      <result property="mail" column="mail"></result>
+    </collection>
   </resultMap>
   <cache type="com.jianzhong.demo.utils.RedisCacheUtil" eviction="LRU" flushInterval="6000000" size="1024" readOnly="false"/>
   <sql id="Base_Column_List">
-    uid, username, password, is_del, create_time, update_time, roles
+    uid,
+    username,
+--     password,
+    is_del,
+    create_time,
+    update_time,
+    roles
   </sql>
   <select id="loadUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
     select

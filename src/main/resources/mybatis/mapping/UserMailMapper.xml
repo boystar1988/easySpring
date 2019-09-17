@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jianzhong.demo.repository.UserMailMapper">
+  <resultMap id="BaseResultMap" type="com.jianzhong.demo.domain.UserMail">
+    <id column="user_mail_id" jdbcType="BIGINT" property="user_mail_id" />
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="is_del" jdbcType="BIT" property="is_del" />
+    <result column="create_time" jdbcType="INTEGER" property="create_time" />
+    <result column="update_time" jdbcType="INTEGER" property="update_time" />
+  </resultMap>
+  <cache type="com.jianzhong.demo.utils.RedisCacheUtil" eviction="LRU" flushInterval="6000000" size="1024" readOnly="false"/>
+
+</mapper>

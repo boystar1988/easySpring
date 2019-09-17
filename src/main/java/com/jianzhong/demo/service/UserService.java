@@ -22,7 +22,7 @@ public class UserService implements Serializable, UserDetailsService
     @Autowired
     private ApplicationContext publisher;
 
-    public int deleteByPrimaryKey(Long uid)
+    public int deleteUserByUid(Long uid)
     {
         return userMapper.deleteByPrimaryKey(uid);
     }
@@ -42,12 +42,12 @@ public class UserService implements Serializable, UserDetailsService
         return uid;
     }
 
-    public User selectByPrimaryKey(Long uid)
+    public User findUserByUid(Long uid)
     {
         return userMapper.selectByPrimaryKey(uid);
     }
 
-    public List<User> select()
+    public List<User> findAllUser()
     {
         return userMapper.select();
     }
@@ -60,6 +60,11 @@ public class UserService implements Serializable, UserDetailsService
     public int updateByPrimaryKey(User record)
     {
         return userMapper.updateByPrimaryKey(record);
+    }
+
+    public User getUserWithUserMail(Long uid)
+    {
+        return userMapper.getUserWithUserMail(uid);
     }
 
     @Override
