@@ -67,6 +67,11 @@ public class UserService implements Serializable, UserDetailsService
         return userMapper.getUserWithUserMail(uid);
     }
 
+    public List<User> findUserInIds(List<Long> uids)
+    {
+        return userMapper.selectByPrimaryKeys(uids);
+    }
+
     @Override
     public User loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userMapper.loadUserByUsername(s);

@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,10 @@ public class UserController extends CommonController
         @RequestParam(value = "pageSize",defaultValue = "20") String pageSize
     ) {
         PageHelper.startPage(Integer.parseInt(pageNum),Integer.parseInt(pageSize));
-        List<User> data = userService.findAllUser();
+        List uids = new ArrayList();
+        uids.add(1L);
+//        uids.add(2L);
+        List<User> data = userService.findUserInIds(uids);
         PageInfo<User> pageInfo = new PageInfo<>(data);
         return this.success(pageInfo,"success");
     }

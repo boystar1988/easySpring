@@ -2,10 +2,8 @@ package com.jianzhong.demo.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Configuration

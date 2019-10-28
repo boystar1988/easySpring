@@ -27,6 +27,8 @@ public interface UserMapper
 
     User loadUserByUsername(String username);
 
+    List<User> selectByPrimaryKeys(List<Long> uids);
+
     /**
      * 联表查询
      * @param uid 用户ID

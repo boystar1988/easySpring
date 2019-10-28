@@ -48,26 +48,26 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <!-- Mybatis -->
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis.spring.boot</groupId>-->
-<!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--            <version>1.3.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.mybatis</groupId>-->
-<!--            <artifactId>mybatis-ehcache</artifactId>-->
-<!--            <version>1.0.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-ehcache</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- Hibernate -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.debop</groupId>
-            <artifactId>hibernate-redis</artifactId>
-            <version>2.3.2</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.github.debop</groupId>-->
+<!--            <artifactId>hibernate-redis</artifactId>-->
+<!--            <version>2.3.2</version>-->
+<!--        </dependency>-->
         <!-- Redis依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -111,6 +111,11 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
             <version>1.3.5.RELEASE</version>
         </dependency>
+        <!-- thymeleaf -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+<!--        </dependency>-->
         <!-- Swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -118,11 +123,11 @@
             <version>2.5.0</version>
         </dependency>
         <!-- Swagger-UI -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.5.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.springfox</groupId>-->
+<!--            <artifactId>springfox-swagger-ui</artifactId>-->
+<!--            <version>2.5.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
@@ -140,10 +145,44 @@
 <!--            <version>0.2.0</version>-->
 <!--        </dependency>-->
         <!-- 配置中心 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-config-server</artifactId>-->
+<!--            <artifactId>spring-cloud-starter</artifactId>-->
 <!--        </dependency>-->
+        <!-- Eureka -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--        </dependency>-->
+        <!-- Apollo -->
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-client</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ctrip.framework.apollo</groupId>
+            <artifactId>apollo-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- Feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- Hystrix -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
         <!-- Zookeeper -->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
@@ -156,6 +195,19 @@
 <!--            </exclusions>-->
 <!--        </dependency>-->
     </dependencies>
+
+    <!-- Spring Cloud 依赖管理 -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -176,41 +228,41 @@
                 </executions>
             </plugin>
             <!-- mybatis自动生成实体 -->
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.5</version>
-                <dependencies>
-                    <dependency>
-                        <groupId> mysql</groupId>
-                        <artifactId> mysql-connector-java</artifactId>
-                        <version> 5.1.39</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.mybatis.generator</groupId>
-                        <artifactId>mybatis-generator-core</artifactId>
-                        <version>1.3.5</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>Generate MyBatis Artifacts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!--允许移动生成的文件 -->
-                    <verbose>true</verbose>
-                    <!-- 是否覆盖 -->
-                    <overwrite>true</overwrite>
-                    <!-- 自动生成的配置 -->
-                    <configurationFile>
-                        src/main/resources/mybatis/config/mybatis-generator.xml</configurationFile>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.mybatis.generator</groupId>-->
+<!--                <artifactId>mybatis-generator-maven-plugin</artifactId>-->
+<!--                <version>1.3.5</version>-->
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId> mysql</groupId>-->
+<!--                        <artifactId> mysql-connector-java</artifactId>-->
+<!--                        <version> 5.1.39</version>-->
+<!--                    </dependency>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.mybatis.generator</groupId>-->
+<!--                        <artifactId>mybatis-generator-core</artifactId>-->
+<!--                        <version>1.3.5</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>Generate MyBatis Artifacts</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash;允许移动生成的文件 &ndash;&gt;-->
+<!--                    <verbose>true</verbose>-->
+<!--                    &lt;!&ndash; 是否覆盖 &ndash;&gt;-->
+<!--                    <overwrite>true</overwrite>-->
+<!--                    &lt;!&ndash; 自动生成的配置 &ndash;&gt;-->
+<!--                    <configurationFile>-->
+<!--                        src/main/resources/mybatis/config/mybatis-generator.xml</configurationFile>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
             <!-- Docker maven -->
             <plugin>
                 <groupId>com.spotify</groupId>
@@ -218,7 +270,7 @@
                 <version>1.0.0</version>
                 <configuration>
                     <!-- docker私服的地址 -->
-<!--                    <dockerHost>http://39.108.246.114:5000</dockerHost>-->
+<!--                    <dockerHost>http://192.168.1.140:5000</dockerHost>-->
                     <!--镜像名称以及版本号-->
                     <imageName>spring:1.0.0</imageName>
                     <!--依赖的基础镜像-->

@@ -27,7 +27,7 @@ public class SwaggerConfig {
                 .build()
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts());
-    }
+}
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
@@ -42,7 +42,7 @@ public class SwaggerConfig {
     }
 
     private List<ApiKey> securitySchemes() {
-        List<ApiKey> apiKeyList= new ArrayList();
+        List<ApiKey> apiKeyList= new ArrayList<>();
         apiKeyList.add(new ApiKey("x-auth-token", "x-auth-token", "header"));
         return apiKeyList;
     }

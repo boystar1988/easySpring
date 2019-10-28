@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class AuthConstant
 {
+    public static final String AUTH_SECURITY_SALT          = "fgRsJvXnEjtKSFxrGQhTMzWdYCNuODqk";
+
     public static final String AUTH_REDIS_FIELD_TOKEN      = "es:token:";
     public static final String AUTH_REDIS_FIELD_USER_TOKEN = "es:user:token:";
 

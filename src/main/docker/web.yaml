@@ -1,0 +1,30 @@
+# Kubernetes配置
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginxpod
+  namespace: default
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      imagePullPolicy: IfNotPresent
+      volumnMounts:
+        - name: conf
+          mountPath: /etc/nginx/conf.d
+          readOnly: true
+      ports:
+        - name: p1
+          containerPort: 80
+          hostPort: 5080
+          protocal: http
+      env:
+        - name: PROJECT_NAME
+          value: nginx
+  volumes:
+    - name: conf
+      hostPath:
+        path: /root/nginx/conf
+        type: Directory
+restartPolicy: Always
+hostNetwork: false

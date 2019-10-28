@@ -1,9 +1,12 @@
 package com.jianzhong.demo;
 
+import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
+//import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+//import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  *                             _ooOoo_
@@ -37,9 +40,23 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  *                   不见满街漂亮妹，哪个归得程序员？
  */
 @SpringBootApplication
-@EnableJpaRepositories
-//@MapperScan(basePackages = "com.jianzhong.demo.repository")
+@MapperScan(basePackages = "com.jianzhong.demo.repository")
+//@EnableEurekaClient
+@EnableScheduling
+@EnableApolloConfig
+//@SpringCloudApplication
 public class DemoApplication {
+
+//    @Value("${spring.profiles.active}")
+//    static String env;
+//    @Value("${spring.application.name}")
+//    static String appName;
+//
+//    static {
+//        System.setProperty("-Dapp.id",appName);
+//        System.setProperty("-Denv",env);
+//        System.setProperty("-Ddev_meta","http://127.0.0.1:8080");
+//    }
 
     public static void main(String[] args)
     {
